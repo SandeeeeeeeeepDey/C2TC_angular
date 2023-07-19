@@ -1,0 +1,10 @@
+<p>child works!</p>
+<div *ngIf="decision; then thisBlock; else esleBlock">
+    <ngTemplate #thenBlock >
+        <h2> {{title}} </h2>
+    </ngTemplate>
+    <ngTemplate #thenBlock >
+        <h2 #elseBlock>Could not find title</h2>
+    </ngTemplate>
+    
+</div>

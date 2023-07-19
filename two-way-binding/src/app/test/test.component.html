@@ -1,1 +1,63 @@
-<p>test works!</p>
+<!-- <p>test works!</p> -->
+<div>
+    <h2>Two Way because-</h2>
+</div>
+
+<div>
+    <br>
+    <strong>Task 1:</strong>
+    <!-- for basic two way binding, using [()] and ngModel -->
+    <p>Till event binding, we were giving the data to display from code to browser</p>
+    <input [(ngModel)]="name" type="text" />
+    <br>
+    {{name}}
+    <p>But here the browser is taking data brom us and using variable from code to store and display the entered data</p>
+    <br>
+</div>
+  
+  
+
+  <!-- ____________________________________________________________________________________________________________________________________ -->
+  <div>
+    <br>
+    <strong>Task 2:</strong>
+    <!-- Ill get input from ngModel, and will print output on click of a button -->
+    <h2>This is how I'll be using user input and work on it</h2>
+    <input [(ngModel)]="input" type="text" />
+    <button (click)="onClick($event)"> Print</button> 
+    <br>
+    {{output}}
+    <br>
+  </div>
+  
+
+  <!-- ____________________________________________________________________________________________________________________________________ -->
+  <div>
+    <br>
+    <strong>Task 3:</strong>
+    <!-- Try on split binding, to add funtionality in between -->
+    <label for="test">type more than 5 characters to display</label><br>
+    <input id="test" [ngModel]="testName" (ngModelChange)="testClick($event)" type="text" />
+    <p>{{testName}}</p> <!-- using ngModelChange to break the binding to add functionality in between -->
+    <br>
+  </div>
+  
+
+  <!-- ____________________________________________________________________________________________________________________________________ -->
+  <div>
+    <br>
+    <strong>Task 3:</strong>
+    <!-- To use Getters and Setters in between -->
+    <p>5 letters atleast</p>  <br>
+    <input [(ngModel)]="usingGnS" type="text">
+    <button isdisabled="onclickTwo($event)" (click)="onclickTwo($event)">submit</button>
+    {{out}}<!-- Using the getter setter to add functionality in between and using a button to display with additional functionality -->
+    <br>
+  </div>
+  
+  <div>
+    <strong> Task 5:</strong>
+    <p>Focus first on me</p>
+    <input #focusId type="text" [(ngModel)]="focus">
+    <p>{{focus}}</p>
+  </div>

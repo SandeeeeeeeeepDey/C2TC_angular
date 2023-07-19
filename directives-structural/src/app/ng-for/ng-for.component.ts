@@ -5,8 +5,8 @@ import { Component } from '@angular/core';
   template: `
   <h3>For Loops in Angular</h3>
   
-<div *ngFor="let condition of conditions">
-  <p #cat [ngClass]="condition ? 'white' : 'black'">Using for loop with ternary operator and ngClass classbinding </p>
+<div *ngFor="let condition of conditions;index as i">
+  <p #cat [ngClass]="condition ? 'white' : 'black'">{{i}}Using for loop with ternary operator and ngClass classbinding </p>
 </div>
  
   `,
