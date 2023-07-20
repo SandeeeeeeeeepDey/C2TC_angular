@@ -1,0 +1,8 @@
+[
+    {"id":1,"name":"Sandeep Dey", "skills":"lazer Eyes"},
+    {"id":2,"name":"Batman", "skills":"Best Human Super Hero"},
+    {"id":3,"name":"Doctor Strange", "skills":"Coolest"},
+    {"id":4,"name":"Tony Stark", "skills":"Super Wacky"},
+    {"id":5,"name":"Hulk", "skills":"Smart and Indistructable"},
+    {"id":6,"name":"John Lennon", "skills":"Dreamer"} 
+  ]
