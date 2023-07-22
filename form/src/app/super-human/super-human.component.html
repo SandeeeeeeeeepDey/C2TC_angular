@@ -1,0 +1,74 @@
+<p>{{info|json}}</p>
+<div class="d-flex align-items-center background">
+    <form #superForm="ngForm" class="container rounded mt-3" (ngSubmit)="onSubmit()" novalidate>
+
+        <fieldset class="mb-3">
+            <label for="name">Username</label>
+            <input #name="ngModel" type="text" name="name" class="form-control" 
+            [(ngModel)]="info.name" required [class.is-invalid]="name.invalid && (name.touched || superForm.submitted)"
+            >
+            <small class="text-danger" [class.d-none]="name.valid || (name.untouched && !superForm.submitted)">Please enter a name</small>
+        </fieldset>
+
+        <fieldset class="mb-3">
+            <label for="email">E-mail</label>
+            <input #email="ngModel" name="email" type="email" class="form-control" 
+            [(ngModel)]="info.email" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" [class.is-invalid]="email.invalid && (email.touched || superForm.submitted)"
+            >
+            <div *ngIf="email.invalid && (email.touched||superForm.submitted)">
+                <small class="text-danger" *ngIf="email.errors && email.errors['required']">Please enter an E-mail Id</small>
+                <small class="text-danger" *ngIf="email.errors && email.errors['pattern']">E-mail should me in the E-mail format, eg, "example@of.email"</small>
+            </div>
+        </fieldset>
+
+        <fieldset class="mb-3">
+            <label for="number">Phone Number</label>
+            <input #number="ngModel" type="tel" name="number" class="form-control" 
+            [(ngModel)]="info.number" required pattern="^[0-9]{10}" [class.is-invalid]="number.invalid && (number.touched || superForm.submitted)"
+            >
+            <div *ngIf="number.invalid && (number.touched || superForm.submitted)">
+                <small class="text-danger" *ngIf="number.errors && number.errors['required']">Please enter your Phone Number</small>
+                <small class="text-danger" *ngIf="number.errors && number.errors['pattern']">There should be 10 digit Numerical values</small>
+            </div>
+        </fieldset>
+<hr>
+        <fieldset class="mb-3">
+            <label for="abilities">What is your Super Human Ability
+                <select #abilitiesClass="ngModel" name="abilities" class="form-control" 
+                [(ngModel)]="info.abilities" required (blur)="abilityValidity(abilitiesClass.value)" (change)="abilityValidity(abilitiesClass.value)" 
+                [class.is-invalid]="abilityInvalid && (abilitiesClass.touched || superForm.submitted)">
+                    <option selected disabled>
+                        Select Your Primary Ability
+                    </option>
+                    <option *ngFor="let ability of abilities">
+                        {{ability}}
+                    </option>
+                </select>
+            </label>
+            <small class="text-danger" [class.d-none]="!abilityInvalid || (abilitiesClass.untouched && !superForm.submitted)">Please Select your Primary Ability</small>
+        </fieldset>
+<hr>
+        <fieldset class="md-3 form-check">
+            <label for="debatable">What would you do if it become really hard to continue the hardwork?</label>
+            <div *ngFor="let opt of options" >
+                <label class="form-check-label">
+                    <input #radi="ngModel" name="debatable" class="form-check-input" type="radio" id="debatable" value={{opt}} 
+                    required [(ngModel)]="info.debatable" [class.is-invalid]="superForm.submitted && radi.invalid">{{opt}}
+                </label>
+            </div>   
+            <small class="text-danger" [class.d-none]="!superForm.submitted || superForm.controls['debatable'].valid">Please Select an Option</small>
+        </fieldset>
+<hr>
+        <fieldset class="form-check mb-3">
+            <label for="consent" class="form-check-label">
+                <input #check="ngModel" type="checkbox" class="form-check-input" name="consent" [(ngModel)]="info.consent" 
+                required [class.is-invalid]="check.touched && check.invalid || (check.invalid && superForm.submitted)">Do you Accept the Super Human Program?
+            </label>
+            <small class="text-danger" [class.d-none]="check.valid || (check.untouched && !superForm.submitted)">Please Agree to procede</small>
+        </fieldset>
+
+        <fieldset class="d-flex justify-content-center">
+            <button name="submit" type="submit" class="btn btn-primary mb-3" >Submit</button>
+        </fieldset>
+    </form>
+</div>

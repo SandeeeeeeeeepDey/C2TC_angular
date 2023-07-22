@@ -1,0 +1,62 @@
+<p>{{userModel|json}}</p>
+<div class="d-flex align-items-center backdround" >
+    <form #userForm="ngForm" class="container rounded mt-3" (ngSubmit)="onSubmit()" novalidate >
+        <!-- {{userForm.value | json}}
+        <br>
+         -->
+        <fieldset class="mb-3">
+          <label for="name">Name</label>
+          <input #name="ngModel" required [class.is-invalid]="name.invalid && name.touched" type="text" class="form-control" id="name" name="name" [(ngModel)]="userModel.name">
+          <small class="text-danger" [class.d-none]="name.valid || name.untouched">Whats up</small>
+        </fieldset>
+        <fieldset class="mb-3 ">
+            <label for="email">Email address</label>
+            <input #email="ngModel" required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\.[a-zA-Z]{2,})?$" [class.is-invalid]="email.invalid && email.touched" type="email" class="form-control" id="email" name="email" [(ngModel)]="userModel.email">
+            <small class="text-danger" [class.d-none]="email.valid || email.untouched">what upp</small>
+        </fieldset>
+        <fieldset class="mb-3">
+            <label for="number">Phone Number</label>
+            <input pattern="^[0-9]{10}" required #number="ngModel" [class.is-invalid]="number.invalid && number.touched" type="tel" class="form-control" id="number" name="number" [(ngModel)]="userModel.number">
+            <small class="text-danger" [class.d-none]="number.valid || number.untouched">WHHHHHHHHHHHHHHHHHHHHHHHHHHH</small>
+        </fieldset>
+        <hr>
+    
+        <fieldset class="mb-3">
+            <label for="abilities">What is your Super Human Ability
+                <select required (blur)="validateAbility(ability.value)" (change)="validateAbility(ability.value)" [class.is-invalid]="abilityHasErr && ability.touched" [(ngModel)]="userModel.abilities" 
+                name="abilities" class="form-control " #ability="ngModel">
+                    <option selected disabled >
+                        Select Your Primary Ability
+                    </option>
+                    <option *ngFor="let ability of abilities">
+                        {{ability}}
+                    </option>
+                </select>
+            </label>
+            <small class="text-danger" [class.d-none]="!abilityHasErr || ability.untouched">jhvjkvhkjv</small>
+        </fieldset>
+<!-- {{ability.className}} -->
+        
+        <hr>
+    
+        <fieldset class="mb-3 form-check" >
+            <label for="debatable">Are there more Doors or Wheels in the world?</label>
+            <div *ngFor="let opt of options">
+                <label class="form-check-label"><input #which="ngModel" required [class.is-invalid]="userForm.submitted && which.invalid" name="debatable" class="form-check-input" type="radio" id="debatable" value={{opt}} [(ngModel)]="userModel.debatable">{{opt}}</label>
+            </div>
+        </fieldset>
+        
+        
+            
+        <hr>
+    
+        <fieldset class="mb-3 form-check">
+          <label><input required #chek="ngModel" [class.is-invalid]="chek.invalid && chek.touched" class="form-check-input" type="checkbox" name="consent" [(ngModel)]="userModel.consent"> Remember me</label>
+        </fieldset>
+
+        <fieldset class="d-flex justify-content-center">
+            <button [disabled]="(userForm.form.invalid || abilityHasErr)" type="submit" class="btn btn-primary mb-3">Submit</button>
+        </fieldset>
+    
+      </form>
+</div>

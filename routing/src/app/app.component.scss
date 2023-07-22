@@ -1,0 +1,31 @@
+a{
+    text-decoration: none;
+    padding:10px;
+    color:black;
+    &.active {
+        color: aquamarine;
+      }
+}
+// a:active {
+//     color:aquamarine;
+// }
+li{
+    display:inline;
+}
+// nav {
+//     ul {
+//       li {
+//         display: inline;
+  
+//         a {
+//           text-decoration: none;
+//           padding: 10px;
+//           color: black;
+  
+//           &.active {
+//             color: aquamarine;
+//           }
+//         }
+//       }
+//     }
+//   }
