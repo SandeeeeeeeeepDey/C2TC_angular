@@ -1,0 +1,29 @@
+<h2 class="text-center">Welcome Dear Student</h2>
+<div class="container background">
+    <div class=" mt-4 pt-2 mb-4 pb-4">
+        <form #student="ngForm" class="form-group container p-3 mt-3" (ngSubmit)="onSubmit()">
+            <h3 class="text-center">Log-in</h3>
+            <fieldset>
+                <label for="name">Student Name</label>
+                <input #name="ngModel" name="name" class="form-control" type="text" 
+                [(ngModel)]="studentData.name" required [class.is-invalid]="name.invalid && (name.touched || student.submitted)">
+                <div *ngIf="name.invalid && (name.touched || student.submitted)">
+                    <small class="text-danger">Please Enter your name</small>
+                </div>
+            </fieldset>
+            <fieldset>
+                <label for="password">Student Password</label>
+                <input #pass="ngModel" name="password" type="password" class="form-control" 
+                [(ngModel)]="studentData.password" required [class.is-invalid]="pass.invalid && (pass.touched || student.submitted)"
+                pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,}$">
+                <div *ngIf="pass.invalid && (pass.touched || student.submitted)">
+                    <small class="text-danger" *ngIf="pass.errors && pass.errors['required']">Please Enter a Password</small>
+                    <small class="text-danger" *ngIf="pass.errors && pass.errors['pattern']">Your Password Should have atleast one uppercase, lowercase and number in it. eg. Password123</small>
+                </div>
+            </fieldset>
+            <div class="d-flex justify-content-center">
+                <button class="btn btn-primary mt-4" type="submit">Submit</button>
+            </div>
+        </form> 
+    </div>
+</div>

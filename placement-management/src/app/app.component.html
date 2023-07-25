@@ -1,0 +1,161 @@
+<div class="card">
+  <h1 class="text-center">
+    Placement Management 
+  </h1>
+</div>
+<div class="container p-4 background">
+  <div class="card p-4" style="opacity: 0.8;">
+    <form [formGroup]="registrationForm" class="form-group container border p-3" (ngSubmit)="onSubmit()">
+      <fieldset>
+        <label for="roll">Roll Number</label>
+        <input formControlName="roll" type="text" name="roll" class="form-control" placeholder="Enter your 3-digit Roll Number"
+        [class.is-invalid]="(vroll?.invalid && (vroll?.touched||isFormSubmitted)) && vroll?.errors?.['design']">
+        
+        <div *ngIf="(vroll?.invalid && (vroll?.touched||isFormSubmitted)) && vroll?.errors?.['design']">
+          <small class="text-danger" *ngIf="vroll?.errors?.['required'] && vroll?.pristine">You Need to Enter a Roll Number</small>
+          <small class="text-danger" *ngIf="vroll?.errors?.['design'] && vroll?.dirty">You need to Enter a 3-digit Roll Number NOT starting with 0</small>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <label for="name">Name</label>
+        <input formControlName="name" type="text" name="name" class="form-control" placeholder="Enter your Full Name"
+        [class.is-invalid]="(vname?.invalid && (vname?.touched || isFormSubmitted)) && vname?.errors?.['design']">
+        
+        <div *ngIf="(vname?.invalid && (vname?.touched || isFormSubmitted)) && vname?.errors?.['design']">
+          <small class="text-danger" *ngIf="vname?.errors?.['required'] && vname?.pristine">You Need to Enter a Name</small>
+          <small class="text-danger" *ngIf="vname?.errors?.['design'] && vname?.dirty">You need to Enter a valid name with only Alphabets</small>
+        </div> 
+      </fieldset>
+
+      <fieldset>
+        <label for="city">City</label>
+        <input formControlName="city" type="text" name="city" class="form-control" placeholder="Enter your City"
+        [class.is-invalid]="(vcity?.invalid && (vcity?.touched||isFormSubmitted)) && vcity?.errors?.['design']">
+
+        <div *ngIf="(vcity?.invalid && (vcity?.touched || isFormSubmitted)) && vcity?.errors?.['design']">
+          <small class="text-danger" *ngIf="vcity?.errors?.['required'] && vcity?.pristine">You Need to Enter a City</small>
+          <small class="text-danger" *ngIf="vcity?.errors?.['design'] && vcity?.dirty">You need to Enter a valid city with only Alphabets</small>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <label for="percentage">Percentage</label>
+        <input formControlName="percentage" type="text" name="percentage" class="form-control" placeholder="Enter your Percentage Numerical Value"
+        [class.is-invalid]="(vpercentage?.invalid && (vpercentage?.touched||isFormSubmitted)) && vpercentage?.errors?.['design']">
+        <div *ngIf="(vpercentage?.invalid && (vpercentage?.touched || isFormSubmitted)) && vpercentage?.errors?.['design']">
+          <small class="text-danger" *ngIf="vpercentage?.errors?.['required'] && vpercentage?.pristine">You Need to Enter a Percentage</small>
+          <small class="text-danger" *ngIf="vpercentage?.errors?.['design'] && vpercentage?.dirty">You need to Enter a valid percentage with up to two decimal places</small>
+        </div>        
+      </fieldset>
+      <div class="d-flex justify-content-center mt-3">
+        <button type="submit" class="btn btn-primary ">Register</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container">
+  <h1 class="text-center pt-4">DataBase Representation</h1>
+  <div class="card p-3">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Roll Number</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Percentage</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody class="tbody">
+        <tr *ngFor="let student of listOfStudent">
+          <td>{{student.roll}}</td>
+          <td>{{student.name}}</td>
+          <td>{{student.city}}</td>
+          <td>{{student.percentage}}</td>
+          <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updateStudent(student)">
+            Edit
+          </button></td>
+          <td><button class="btn btn-danger" (click)="removeStudent(student.roll)">Delete</button></td>
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+</div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Student Information</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form [formGroup]="editForm" class="form-group container border p-3" (ngSubmit)="updateStudent(editForm.value)">
+          <fieldset>
+            <label for="roll">Roll Number</label>
+            <input formControlName="roll" type="text" name="roll" class="form-control" placeholder="Enter your 3-digit Roll Number"
+            [class.is-invalid]="(eroll?.invalid && (eroll?.touched||isEditSubmitted)) && eroll?.errors?.['design']">
+            
+            <div *ngIf="(eroll?.invalid && (eroll?.touched||isEditSubmitted)) && eroll?.errors?.['design']">
+              <small class="text-danger" *ngIf="eroll?.errors?.['required'] && eroll?.pristine">You Need to Enter a Roll Number</small>
+              <small class="text-danger" *ngIf="eroll?.errors?.['design'] && eroll?.dirty">You need to Enter a 3-digit Roll Number NOT starting with 0</small>
+            </div>
+          </fieldset>
+    
+          <fieldset>
+            <label for="name">Name</label>
+            <input formControlName="name" type="text" name="name" class="form-control" placeholder="Enter your Full Name"
+            [class.is-invalid]="(ename?.invalid || ename?.errors?.['design']) && (ename?.touched || isEditSubmitted)">
+            
+            <div *ngIf="(ename?.invalid && (ename?.touched || isEditSubmitted)) && ename?.errors?.['design']">
+              <small class="text-danger" *ngIf="ename?.errors?.['required'] && ename?.pristine">You Need to Enter a Name</small>
+              <small class="text-danger" *ngIf="ename?.errors?.['design'] && ename?.dirty">You need to Enter a valid name with only Alphabets</small>
+            </div> 
+          </fieldset>
+    
+          <fieldset>
+            <label for="city">City</label>
+            <input formControlName="city" type="text" name="city" class="form-control" placeholder="Enter your City"
+            [class.is-invalid]="(ecity?.invalid && (ecity?.touched||isEditSubmitted)) && ecity?.errors?.['design']">
+    
+            <div *ngIf="(ecity?.invalid && (ecity?.touched || isEditSubmitted)) && ecity?.errors?.['design']">
+              <small class="text-danger" *ngIf="ecity?.errors?.['required'] && ecity?.pristine">You Need to Enter a City</small>
+              <small class="text-danger" *ngIf="ecity?.errors?.['design'] && ecity?.dirty">You need to Enter a valid city with only Alphabets</small>
+            </div>
+          </fieldset>
+    
+          <fieldset>
+            <label for="percentage">Percentage</label>
+            <input formControlName="percentage" type="text" name="percentage" class="form-control" placeholder="Enter your Percentage Numerical Value"
+            [class.is-invalid]="(epercentage?.invalid && (epercentage?.touched||isEditSubmitted)) && epercentage?.errors?.['design']">
+            <div *ngIf="(epercentage?.invalid && (epercentage?.touched || isEditSubmitted)) && epercentage?.errors?.['design']">
+              <small class="text-danger" *ngIf="epercentage?.errors?.['required'] && epercentage?.pristine">You Need to Enter a Percentage</small>
+              <small class="text-danger" *ngIf="epercentage?.errors?.['design'] && epercentage?.dirty">You need to Enter a valid percentage with up to two decimal places</small>
+            </div>        
+          </fieldset>
+        
+
+
+      
+      <div class="modal-footer">
+        <button #modalClose type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" >Save changes</button>
+      </div>
+    </form>
+  </div>
+    </div>
+  </div>
+</div>
