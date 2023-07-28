@@ -1,0 +1,252 @@
+<div class="container" name="heading">
+  <h1 class="text-center">Sprint-2 Project </h1>
+</div>
+<!-- Form -->
+<div class="container">
+  <div  class="card m-3">
+    <div class="container">
+      <div>
+        <div><h4  class="display-6 text-center p-2">Student Module</h4>
+          <form #registerForm="ngForm" (ngSubmit)="register(registerForm.form)">
+              
+              <div>
+                  <label for="id">Id:</label>
+                  <input
+                      id="id" required #idd="ngModel" (ngModel)="idd" name="id" class="form-control" type="text" placeholder="Enter the id"
+                    
+                      [class.is-invalid]="idd?.invalid && idd?.touched"/>
+                  <div *ngIf="idd?.invalid && idd?.touched">
+                      <small class="text-danger" *ngIf="idd?.errors&&idd?.errors?.['required']">Required</small>
+                      <!-- <small class="text-danger" *ngIf="idd?.errors&&idd?.errors?.['pattern']">Must be 2 digits && not start with 0</small> -->
+                  </div>
+              </div>
+
+              <div>
+                <label for="name">Name:</label>
+                <input id="name" required #fname="ngModel" (ngModel)="fname" name="name" type="text" [class.is-invalid]="fname.invalid && fname.touched" class="form-control" placeholder="Enter the name"/>
+                <small class="text-danger" [class.d-none]="fname.valid || fname.untouched">* Required</small>
+              </div>
+
+              <div>
+              <label for="college" class="">College: </label>
+                  <input id="college" required #college="ngModel" (ngModel)="college" name="college " type="text" [class.is-invalid]="college?.invalid && college?.touched" class="form-control" placeholder="Enter the college">
+                  <small class="text-danger" [class.d-none] = "college.valid || college.untouched">* Required</small>
+              </div>
+
+
+              <div>
+                <label for="roll" class="">Roll Number: </label>
+                <input id="roll" required #roll="ngModel" (ngModel)="roll" name="roll" type="text" [class.is-invalid]="roll?.invalid && roll?.touched" class="form-control" placeholder="Enter the roll number" >
+                <div *ngIf="roll?.invalid && roll?.touched">
+                    <small class="text-danger" [class.d-none] = "roll.valid || roll.untouched">* Required</small>
+                    <!-- <small class="text-danger" ngIf="roll?.errors&&roll?.errors?.['pattern']"> Must be 3 digits && not start with 0</small> -->
+                </div>
+              </div>
+
+              <div>
+                  <label for="qualification" class="">Qualification: </label>
+                  <input id="qualification" required #qualification="ngModel" (ngModel)="qualification" name="qualification" type="text" [class.is-invalid]="qualification?.invalid && qualification?.touched" class="form-control" placeholder="Enter the qualification">
+                  <small class="text-danger" [class.d-none] = "qualification.valid || qualification.untouched">* Required</small>
+              </div>
+
+              <div class="">
+                <label for="course" class="">Course: </label>              
+                <input id="course" required #course="ngModel" (ngModel)="course" name="course" type="text" [class.is-invalid]="course.invalid && course.touched" class="form-control" placeholder="Enter the course">
+                <small class="text-danger" [class.d-none] ="course.valid || course.untouched">* Required</small>              
+              </div>
+
+              <div class="">
+                    <label for="year" class="">Year: </label>                  
+                    <input id="year" required #year="ngModel" (ngModel)="year" name="year" type="text" [class.is-invalid]="year?.invalid && year?.touched" class="form-control" placeholder="Enter the year">
+                    <div *ngIf="year?.invalid && year?.touched">
+                        <small class="text-danger" [class.d-none] = "year.valid || year.untouched">* Required</small>
+                        <!-- <small class="text-danger" ngIf="year?.errors && year?.errors?.['pattern']"> Must be 4 digits && not start with 0</small> -->
+                    </div>
+              </div>
+
+              <div class="">
+                  <label for="certificate" class="">Certificate: </label>                  
+                  <input id="certificate" required #certificate="ngModel" (ngModel)="certificate" name="certificate" type="text" [class.is-invalid]="certificate?.invalid && certificate?.touched" class="form-control" placeholder="Enter the certificate">
+                  <small class="text-danger" [class.d-none] = "certificate.valid || certificate.untouched">* Required</small>             
+              </div>
+
+              <div class="">
+                  <label for="hallTicketNo" class="">Hall Ticket Number: </label>                  
+                  <input id="hallTicketNo" required #hallTicketNo="ngModel" (ngModel)="hallTicketNo" name="hallTicketNo" type="text" [class.is-invalid]="hallTicketNo?.invalid && hallTicketNo?.touched" class="form-control" placeholder="Enter the hallTicketNo">
+                  <div *ngIf="hallTicketNo?.errors && hallTicketNo?.invalid && hallTicketNo?.touched">
+                      <small class="text-danger" ngIf="hallTicketNo?.errors?.['required']"> Required</small>
+                      <!-- <small class="text-danger" ngIf="hallTicketNo?.errors?.['pattern']"> Must be 5 digits && not start with 0</small>      -->
+                  </div>
+              </div>
+
+              <div class="form-group text-center p-3">
+                  <button [class.disabled]="registerForm.invalid" class="btn btn-primary" type="submit" value="Submit"> Submit </button>
+              </div>
+          </form>
+        </div>  
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="container m-4">
+  <div class="card">
+    <table class="table table-bordered" name="table">
+      <thead>
+      <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>College</th>
+          <th>Roll Number</th>
+          <th>Qualification</th>
+          <th>Course</th>
+          <th>Year</th>
+          <th>Certificate</th>
+          <th>HallTicketNo</th>
+          <th>Edit</th>
+          <th>Delete</th>
+      </tr>
+      </thead>
+      <tbody class="tbody">
+      <tr *ngFor="let student of studentDetails">
+          <td>{{ student.id }}</td>
+          <td>{{student.name}}</td>
+          <td>{{student.college}}</td>
+          <td>{{student.roll}}</td>
+          <td>{{student.qualification}}</td>
+          <td>{{student.course}}</td>
+          <td>{{student.year}}</td>
+          <td>{{student.certificate}}</td>
+          <td>{{student.hallTicketNo}}</td>
+          <td>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="edit(student)">Edit</button>
+          </td>
+          <td>
+          <button type="button" class="btn btn-danger" (click)="deleteStudent(student)">Delete</button>
+          </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+
+<!-- Modal -->
+<div class="modal fade" name="Modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-header">
+      <h1 class="modal-title fs-5" id="exampleModalLabel">Update Student</h1>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+      <form #updateForm="ngForm" (ngSubmit)="updateStudent()">
+      <h4 class="display-6 text-center py-2">Student Module</h4>
+      <div>
+          <label for="id">Id:</label>
+          <div>
+          <input
+              id="id"
+              required
+              #idform="ngModel"
+              (ngModel)="idform"
+              name="id"
+              type="text"
+              [class.is-invalid]="idform?.invalid && idform?.touched"
+              class="form-control"
+              placeholder="Enter the id"
+              
+          />
+          <div *ngIf="idform?.errors && idform?.invalid && idform?.touched">
+              <small class="text-danger" *ngIf="idform?.errors?.['required']">Required</small>
+              <!-- <small class="text-danger" *ngIf="idform?.errors?.['pattern']">Must be 2 digits && not start with 0</small> -->
+          </div>
+          </div>
+      </div>
+
+      <br>
+
+      <div>
+          <label for="name">Name:</label>
+          <div>
+          <input
+              id="name"
+              required
+              #name="ngModel"
+              (ngModel)="studentToUpdate.name"
+              name="name"
+              type="text"
+              [class.is-invalid]="name?.invalid && name?.touched"
+              class="form-control"
+              placeholder="Enter the name"
+          />
+          <small class="text-danger" [class.d-none]="name.valid || name.untouched">* Required</small>
+          </div>
+      </div>
+
+      <div class="">
+      <label for="college" class="">College: </label>
+      <div class="">
+          <input id="college" required (ngModel)="studentToUpdate.college" name="college" type="text" [class.is-invalid]="college?.invalid && college?.touched" class="form-control" placeholder="Enter the college">
+          <small class="text-danger" [class.d-none] = "college.valid || college.untouched">* Required</small>
+      </div>
+      </div>
+      <div class="">
+      <label for="roll" class="">Roll Number: </label>
+      <div class="">
+          <input id="roll" required #roll="ngModel" (ngModel)="roll" name="roll" type="text" [class.is-invalid]="roll?.invalid && roll?.touched" class="form-control" placeholder="Enter the roll number"  >
+          <small class="text-danger" [class.d-none] = "roll.valid || roll.untouched">* Required</small>
+          <!-- <small class="text-danger" ngIf="roll?.errors?.['pattern']"> Must be 3 digits && not start with 0</small> -->
+      </div>
+      </div>
+      <div class="">
+      <label for="qualification" class="">Qualification: </label>
+      <div class="">
+          <input id="qualification" required #qualification="ngModel" (ngModel)="qualification" name="qualification" type="text" [class.is-invalid]="qualification?.invalid && qualification?.touched" class="form-control" placeholder="Enter the qualification">
+          <small class="text-danger" [class.d-none] = "qualification.valid || qualification.untouched">* Required</small>
+      </div>
+      </div>
+      <div class="">
+      <label for="course" class="">Course: </label>
+      <div class="">
+          <input id="course" required #course="ngModel" (ngModel)="course" name="course" type="text" [class.is-invalid]="course?.invalid && course?.touched" class="form-control" placeholder="Enter the course">
+          <small class="text-danger" [class.d-none] = "course.valid || course .untouched">* Required</small>
+      </div>
+      </div>
+      <div class="">
+      <label for="year" class="">Year: </label>
+      
+          <input id="year" required #year="ngModel" (ngModel)="year" name="year" type="text" [class.is-invalid]="year?.invalid && year?.touched" class="form-control" placeholder="Enter the year">
+      <div *ngIf="year?.invalid && year?.touched"> 
+          <small class="text-danger" [class.d-none] = "year.valid || year.untouched">* Required</small>
+          <!-- <small class="text-danger" ngIf="year?.errors?.['pattern']"> Must be 4 digits && not start with 0</small> -->
+      </div>
+      </div>
+      <div class="">
+      <label for="certificate" class="">Certificate: </label>
+      <div class="">
+          <input id="certificate" required #certificate="ngModel" (ngModel)="certificate" name="certificate" type="text" [class.is-invalid]="certificate?.invalid && certificate?.touched" class="form-control" placeholder="Enter the certificate">
+          <small class="text-danger" [class.d-none] = "certificate.valid || certificate.untouched">* Required</small>
+      </div>
+      </div>
+      <div class="">
+      <label for="hallTicketNo" class="">Hall Ticket Number: </label>
+        <div class="">
+            <input id="hallTicketNo" required #hallTicketNo="ngModel" (ngModel)="hallTicketNo" name="hallTicketNo" type="text" [class.is-invalid]="hallTicketNo?.invalid && hallTicketNo?.touched" class="form-control" placeholder="Enter the hallTicketNo">
+            <div *ngIf="hallTicketNo?.errors && hallTicketNo?.invalid && hallTicketNo?.touched">
+                <small class="text-danger" ngIf="hallTicketNo?.errors?.['required']"> Required</small>
+                <!-- <small class="text-danger" ngIf="hallTicketNo?.errors?.['pattern']"> Must be 5 digits && not start with 0</small> -->
+            </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="form-group text-center">
+          <button [class.disabled]="updateForm.form.invalid" class="btn btn-primary" type="submit" value="Submit">Submit</button>
+      </div>
+      </form>
+  </div>
+ </div>
+</div>
+</div>

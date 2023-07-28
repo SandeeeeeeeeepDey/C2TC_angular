@@ -10,108 +10,121 @@ import { CrudService } from './crud.service';
 })
 export class AppComponent {
   // Constructor with user defined Crud service and FormBuilder for validation
-  constructor(private fb:FormBuilder, private service:CrudService){
-    this.getStudents() // to start with the list
+  constructor(private fb: FormBuilder, private service: CrudService) {
+    this.getPlacements(); // to start with the list
   }
 
-
-// Main Registration Form
+  // Main Registration Form
   // For easy access to form contents
-  get vroll(){return this.registrationForm.get('roll')}
-  get vname(){return this.registrationForm.get('name')}
-  get vcity(){return this.registrationForm.get('city');}
-  get vpercentage(){return this.registrationForm.get('percentage')}
+  get vid() { return this.registrationForm.get('id') }
+  get vname() { return this.registrationForm.get('name') }
+  get vcollege() { return this.registrationForm.get('college'); }
+  get vdate() { return this.registrationForm.get('date') }
+  get vqualification() { return this.registrationForm.get('qualification') }
+  get vyear() { return this.registrationForm.get('year') }
 
   // Validation
-  registrationForm=this.fb.group({
-    roll:['',[Validators.required,checker(/^[1-9][0-9]{2}$/)]],
-    name:['',[Validators.required,checker(/^[A-Za-z ]{1,50}$/)]],
-    city:['',[Validators.required,checker(/^[A-Za-z ]{1,50}$/)]],
-    percentage:['',[Validators.required,checker(/^[1-9][0-9]{0,2}(\.[0-9]{1,2})?$|^0(\.[0-9]{1,2})?$/)]],
-  })
-  isFormSubmitted=false // submit validation
-//-----------------------------------------------------------------------POST
+  registrationForm = this.fb.group({
+    id: ['', [Validators.required, checker(/^[1-9][0-9]{2}$/)]],
+    name: ['', [Validators.required, checker(/^[A-Za-z ]{1,50}$/)]],
+    college: ['', [Validators.required, checker(/^[A-Za-z ]{1,50}$/)]],
+    date: ['', [Validators.required, checker(/^\d{4}-\d{2}-\d{2}$/)]],
+    qualification: ['', [Validators.required, checker(/^[A-Za-z ]{1,50}$/)]],
+    year: ['', [Validators.required, checker(/^\d{4}$/)]],
+  });
+  isFormSubmitted = false; // submit validation
+
   // On Register Button click
-  onSubmit(){
-    if(this.registrationForm.valid){
-      this.service.registerStudent(this.registrationForm.value)
-      .subscribe((body)=>{
-        console.log('Success',body)
-        this.registrationForm.reset();
-        this.isFormSubmitted=false
-        this.getStudents();
-      },(err)=>{console.log(err)})
-      
-    }else{
-      this.isFormSubmitted=true
+  onSubmit() {
+    if (this.registrationForm.valid) {
+      this.service.registerPlacement(this.registrationForm.value)
+        .subscribe((body) => {
+          console.log('Success', body);
+          this.registrationForm.reset();
+          this.isFormSubmitted = false;
+          this.getPlacements();
+        }, (err) => {
+          console.log(err);
+        });
+    } else {
+      this.isFormSubmitted = true;
     }
   }
 
-//---------------------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------------------
-  // GET List Of Students From DB
-  listOfStudent=null as any
-  getStudents(){
-    this.service.listStudents().subscribe((bodys)=>{console.log(bodys); this.listOfStudent=bodys},(err)=>console.log(err))
+  // GET List Of Placements From DB
+  listOfPlacement: any = null;
+  getPlacements() {
+    this.service.listPlacements().subscribe((bodys) => {
+      console.log(bodys);
+      this.listOfPlacement = bodys;
+    }, (err) => console.log(err));
   }
-//---------------------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------------------
-   // Delete Student from DB
-  removeStudent(student:any){
-    this.service.deleteStudent(student)
-    .subscribe((body)=>{
-      console.log(body)
-      this.getStudents()
-    },(err)=>{console.log(err)})
-  }
-//---------------------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------------------
-// Modal Form or Edit Form
 
+  // Delete Placement from DB
+  removePlacement(placement: any) {
+    this.service.deletePlacement(placement)
+      .subscribe((body) => {
+        console.log(body);
+        this.getPlacements();
+      }, (err) => {
+        console.log(err);
+      });
+  }
+
+  // Modal Form or Edit Form
   // Easy Access for Validation 
   @ViewChild('modalClose') closeBtn!: ElementRef;
-  get eroll(){return this.editForm.get('roll')}
-  get ename(){return this.editForm.get('name')}
-  get ecity(){return this.editForm.get('city');}
-  get epercentage(){return this.editForm.get('percentage')}
+  get eid() { return this.editForm.get('id') }
+  get ename() { return this.editForm.get('name') }
+  get ecollege() { return this.editForm.get('college'); }
+  get edate() { return this.editForm.get('date') }
+  get equalification() { return this.editForm.get('qualification') }
+  get eyear() { return this.editForm.get('year') }
 
   // Validation
-  editForm=this.fb.group({
-    roll:['',[Validators.required,checker(/^[1-9][0-9]{2}$/)]],
-    name:['',[Validators.required,checker(/^[A-Za-z ]{1,50}$/)]],
-    city:['',[Validators.required,checker(/^[A-Za-z ]{1,50}$/)]],
-    percentage:['',[Validators.required,checker(/^[1-9][0-9]{0,2}(\.[0-9]{1,2})?$|^0(\.[0-9]{1,2})?$/)]],
-  })
-  isEditSubmitted=false // error submit validation
+  editForm = this.fb.group({
+    id: ['', [Validators.required, checker(/^[1-9][0-9]{2}$/)]],
+    name: ['', [Validators.required, checker(/^[A-Za-z ]{1,50}$/)]],
+    college: ['', [Validators.required, checker(/^[A-Za-z ]{1,50}$/)]],
+    date: ['', [Validators.required, checker(/^\d{4}-\d{2}-\d{2}$/)]],
+    qualification: ['', [Validators.required, checker(/^[A-Za-z ]{1,50}$/)]],
+    year: ['', [Validators.required, checker(/^\d{4}$/)]],
+  });
+  isEditSubmitted = false; // error submit validation
 
-  // Object modal of current student for update
-  studentToUpdate={
-    roll:"",
-    name:"",
-    city:"",
-    percentage:""
-  }
+  // Object modal of current placement for update
+  placementToUpdate = {
+    id: "",
+    name: "",
+    college: "",
+    date: "",
+    qualification: "",
+    year: ""
+  };
+
   // Update method
-  updateStudent(student:any){
-
-    this.studentToUpdate = { ...student };
+  updatePlacement(placement: any) {
+    this.placementToUpdate = { ...placement };
     this.editForm.patchValue({
-    roll: student.roll, 
-    name: student.name,
-    city: student.city,
-    percentage: student.percentage,
+      id: placement.id,
+      name: placement.name,
+      college: placement.college,
+      date: placement.date,
+      qualification: placement.qualification,
+      year: placement.year,
     }); // To get the Modal Form with Old Values
-    
-    if(this.editForm.valid){
-    this.service.updateStudent(this.studentToUpdate).subscribe((body)=>{
-      console.log(body)
-      this.getStudents()
-      this.closeBtn.nativeElement.click()
-    },(err)=>{console.log(err)})
+
+    if (this.editForm.valid) {
+      this.service.updatePlacement(this.placementToUpdate).subscribe((body) => {
+        console.log(body);
+        this.getPlacements();
+        this.closeBtn.nativeElement.click();
+      }, (err) => {
+        console.log(err);
+      });
+    } else {
+      console.log("Not entering the update")
+      this.isEditSubmitted = true;
     }
-    else this.isEditSubmitted=true
   }
-
-  
-
 }
